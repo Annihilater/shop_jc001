@@ -6,7 +6,7 @@ from shop_jc001.items import GoodItem
 
 class ShopSpider(scrapy.Spider):
     name = 'shop'
-    allowed_domains = ['http://shop.jc001.cn']
+    allowed_domains = ['shop.jc001.cn']
     start_urls = ['http://shop.jc001.cn/1373528/goods/']
 
     def parse(self, response):
@@ -27,5 +27,5 @@ class ShopSpider(scrapy.Spider):
 
         _url = response.css('.pagination li:last-child a::attr(href)').extract_first()
         if _url != '#none':
-            next_page = self.allowed_domains[0] + _url
-            yield scrapy.Request(url=next_page, callback=self.parse, dont_filter=True)
+            next_page = 'http://' + self.allowed_domains[0] + _url
+            yield scrapy.Request(url=next_page, callback=self.parse)
